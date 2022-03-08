@@ -6,20 +6,24 @@
 1. Was ist `CSV`?
 1. Was unterscheidet `JSON` von `CSV`?
 1. Lösen Sie die binäre Schreibweise `00010111` in ihre Dezimalschreibweise auf.
+1. Was sind ASCII, ISO-8859 und UTF-8?
+1. Beschreiben Sie die Bestandteile eines Box- / Whisker-Plots.
 
 ## Praxisübungen
 
-Laden Sie den (künstlich erzeugten) Datensatz [erstwaehlende.csv](https://raw.githubusercontent.com/datenfruehstueck/ccs/main/02_Daten-sichten/erstwaehlende.csv) auf Ihren Computer herunter. Sie können dazu den [hier](https://raw.githubusercontent.com/datenfruehstueck/ccs/main/02_Daten-sichten/erstwaehlende.csv) angegebenen Link nutzen oder die Datei bei GitHub manuell auswählen und anschließend als `Raw` öffnen. 
+Laden Sie den (künstlich erzeugten) Datensatz [erstwaehlende.csv](https://raw.githubusercontent.com/datenfruehstueck/ccs/main/02_Daten-sichten/erstwaehlende.csv) auf Ihren Computer herunter. Sie können dazu den [hier](https://raw.githubusercontent.com/datenfruehstueck/ccs/main/02_Daten-sichten/erstwaehlende.csv) angegebenen Link nutzen oder die Datei bei GitHub manuell auswählen und anschließend als `Raw` öffnen. Bei der Datei handelt es sich um eine einfache Textdatei, die Sie auch mit jedem Texteditor öffnen können (z.B. *TextEdit* unter MAC, *Notepad* oder *Notepad++* unter Windows). Sie erhalten Einblick in die Datei, die -- wie der Name schon sagt -- mit Kommata getrennte Werte je Zeile enthält. 
 
-Bei der Datei handelt es sich um eine einfache Textdatei, die Sie mit jedem Texteditor öffnen können. Unter Mac können Sie also einfach **TextEdit** dafür nutzen, unter Windows **Notepad** oder **Notepad++**. Sie erhalten Einblick in die Datei, die -- wie der Name schon sagt -- mit Kommata getrennte Werte je Zeile enthält. 
+Speichern Sie die Datei auf Ihrem Computer. 
 
 Im nächsten Schritt sollen die Daten in eine passendere Software eingelesen werden. Dafür können Sie ein Tabellenkalkulationsprogramm nutzen (z.B. Calc, Excel, Sheets). Noch besser (für die weiteren Übungen) wäre aber eine für die CCS übliche Programmiersprache, also **Python** oder **R**. Für beide erhalten Sie hier ein wenig Starthilfe. 
 
 Python oder R müssen installiert werden. Entscheiden Sie sich für eines davon. Installieren Sie außerdem eine sogenannte Entwicklungsumgebung, die Ihnen die (hier sehr einfach gehaltene) Programmierung erleichtert. Für Python empfehle ich Ihnen [PyCharm](https://www.jetbrains.com/pycharm/), für R das [RStudio](https://www.rstudio.com/). 
 
-Nach der Installation müssen Sie für die Praxisübungen zunächst eine Bibliothek (Python-Sprech) bzw. ein Paket (R-Sprech) installieren. In Python tun Sie das von der Kommandozeile Ihres Computers (bzw. innerhalb von PyCharm über das *Terminal*) aus (`pip install pandas`), in R direkt in R bzw. RStudio (`install.packages('tidyverse')`). 
+Nach der Installation müssen Sie für die Praxisübungen zunächst eine Bibliothek (Python-Sprech) bzw. ein Paket (R-Sprech) installieren. Die hier vorgestellte und genutzte Bibliothek in Python heißt *pandas*, das entsprechende Paket in R nennt sich *tidyverse*. In Python installieren Sie von der Kommandozeile Ihres Computers (bzw. innerhalb von PyCharm über das *Terminal*) aus (mithilfe des folgenden Kommandos: `pip install pandas`), in R direkt in R bzw. RStudio (`install.packages('tidyverse')`). 
 
-Die Anweisungen sind hier etwas bewusst vage gehalten. Denn für den weiteren Verlauf der Übungen ist es unabdingbar, dass Sie konkrete Anwendungsschritte für die beiden Programmiersprachen selbst recherchieren lernen. Sind die Bibliothek bzw. das Paket installiert, kann der folgende Code ausgeführt werden. Achten Sie aber darauf, dass der `.csv`-Datensatz und Ihr Skript im selben Verzeichnis liegen und auch von dort ausgeführt werden. 
+Die Anweisungen sind hier etwas bewusst vage gehalten. Denn für den weiteren Verlauf der Übungen ist es unabdingbar, dass Sie konkrete Anwendungsschritte für die beiden Programmiersprachen selbst recherchieren lernen. Weitere Tipps und Anleitungen zur Installation sowie zu den ersten Schritten in Python und R erhalten Sie beispielsweise [hier](https://www.youtube.com/watch?v=p6f4oq08z48), [hier](https://bookdown.org/valerie_hase/Github/tutorial-1-installation-und-aufbau-von-r-und-r-studio.html), [hier](https://bookdown.org/joone/ComputationalMethods/firststeps.html), [hier](https://data-flair.training/blogs/install-pandas-on-windows/) oder [hier](https://faculty.washington.edu/otoomet/machinelearning-py/python.html#installing-python).
+
+Sind die Programmiersprache, die Entwicklungsumgebung und die Bibliothek bzw. das Paket installiert, kann der folgende Code ausgeführt werden. Legen Sie dazu ein neues Skript an und kopieren Sie sich einfach den Code. Achten Sie aber darauf, dass der `.csv`-Datensatz und Ihr Skript im selben Verzeichnis liegen und auch von dort ausgeführt werden. 
 
 ```python
 # Python
@@ -34,6 +38,8 @@ library(tidyverse)
 erstwaehlende <- read_csv('erstwaehlende.csv')
 erstwaehlende
 ```
+
+Wenn Sie keine Fehlermeldung erhalten, sondern stattdessen eine angedeutete Tabelle (in Python: *dataframe*; in R: *tibble*) sehen, sind Sie startklar.
 
 ### Datentypen und Messniveaus
 
@@ -100,6 +106,9 @@ Ab hier folgen nun verschiedene Lösungswege zu den oben vorgestellten Übungen.
 1. Ein Dateiformat für tabellarische Daten.
 1. `JSON` ist ein Dateiformat für hierarchische Daten. Es beschreibt mithilfe einer Schlüssel-Wert-Notation jeden Wert einzeln und benötigt deshalb mehr Speicherplatz. Allerdings kann es mit globalen wie lokalen Merkmalen umgehen (`CSV`: nur global) und kennt grundlegende Datentypen (Zahl vs. Text vs. fehlende Werte).
 1. 23
+1. Kodierungen für Texte. Sie geben die Übersetzung von binär gespeicherten Werten in einzelne Zeichen an. ASCII ist dabei so etwas wie der Ursprung, kann aber nur mit 256 Zeichen umgehen. Die ISO-Normen können mehr, fokussieren aber immer auf einen bestimmten Zeichen- / Sprachraum. UTF-8 ist der Versuch einer dynamischen Länge, um alle Zeichen dieser Welt abbilden zu können. 
+1. Box-Plots stellen Lage- und Streumaße einer metrischen Variable verdichtet dar. Dabei stellt die Box den Interquartilsabstand (IQR, 1.–3. Quartil) dar, der Median (2. Quartil) wird als dickere Linie darin abgebildet und die angehängten Linien ("whiskers") erweitern bis maximal zum 1,5-Fachen des IQR. Mitunter sind weitere Ausreißer als Punkte dargestellt.
+
 
 ### Praxisübungen
 
