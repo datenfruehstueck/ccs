@@ -37,10 +37,12 @@ articles <- read_csv2('10kgnad_articles.csv', col_names = c('ressort', 'article'
 Ganz brachial nach Volltexten zu suchen, funktioniert in Python über die [contains-pandas-Funktion](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.contains.html) und in R über die [str_detect-tidyverse-Funktion](https://stringr.tidyverse.org/reference/str_detect.html). Beiden übergeben Sie die Spalte des Dataframes, die durchsucht werden soll (bei uns: `article`) und den Suchbegriff.
 
 ```python
+# Python
 articles.loc[articles['article'].str.contains('suchbegriff')]
 ```
 
 ```r
+# R
 articles %>%
   filter(str_detect(article, 'suchbegriff'))
 ```
@@ -48,10 +50,12 @@ articles %>%
 Um reguläre Ausdrücke zu suchen, können Sie schlicht dieselbe Funktion nutzen und einfach den regulären Ausdruck direkt übernehmen. 
 
 ```python
+# Python
 articles.loc[articles['article'].str.contains('[Ss]uchbegriff')]
 ```
 
 ```r
+# R
 articles %>%
   filter(str_detect(article, '[Ss]uchbegriff'))
 ```
@@ -77,6 +81,7 @@ nltk.download('punkt')
 ## eigentliche Tokenisierung
 from nltk.tokenize import word_tokenize
 articles['tokens_unigram'] = articles['article'].apply(word_tokenize, language='german')
+
 articles.head(2)
 ```
 
@@ -86,6 +91,7 @@ library(quanteda)
 
 articles_corpus <- corpus(articles, text_field = 'article')
 articles_tokens <- tokens(articles_corpus, what = 'word')
+
 articles_tokens %>%
   head(n = 2)
 ```
@@ -102,16 +108,13 @@ Wenn wir uns Diktionären / Lexika zuwenden, dann gibt es einerseits die Möglic
 
 Anschließend unterscheiden sich Python und R allerdings. In Python können wir nun Wörter in den Dokumenten in einer Schleife durchlaufen und jeweils nachschauen, ob sie im Diktionär hinterlegt sind. Wenn ja, nehmen wir den entsprechenden Wert (`+1` oder `-1`) mit auf und summieren am Ende alle gefundenen Begriffe eines Dokuments in einen Dokument-Score (sodass sich beispielsweise ein negativ und ein positiv aufgeladenes Wort zu einem neutralen Sentiment zusammenfügen). Mit R ist das etwas einfacher: Hier können wir mit der [quanteda-dictionary-Funktion](https://quanteda.io/reference/dictionary.html) aus der Liste an Wörtern ein Diktionär generieren, das wir dann schlicht auf unsere Tokens anwenden. Die Schleifen und Rechenvorgänge übernimmt dabei das quanteda-Paket für uns und übergibt uns am Ende ein Objekt, in dem nurmehr die Begriffe "positiv" und "negativ" als Dokument-Inhalte übrig bleiben -- so oft sie eben entsprechende Wörter im Original-Dokument ersetzen können. Anschließend müssen wir nur noch das etwas unhandliche Datenformat auflösen, mit den ursprünglichen Textinformationen (Ressorts) zusammenbringen und die "positiv"- und "negativ"-Wörter je Dokument in einen Sentiment-Score umwandeln.
 
-In folgendem Beispiel laden wir also das Diktionär von Rauh und wenden es auf unsere Dokumente an.
+In folgendem Beispiel laden wir also das Diktionär von Rauh und wenden es auf unsere Dokumente an. Das dauert in R aufgrund seiner Stapelverarbeitung nicht sonderlich lange, in Python schon deutlich länger.
 
  ```python
 # Python
-import pandas as pd
-from nltk.tokenize import word_tokenize
-
-rauh_words = pd.read_csv('rauh_sentiment_dict.csv', sep = ',', header = True)
-rauh_dict_positiv = rauh_words.loc[rauh_words['sentiment'] == 1].feature
-rauh_dict_negativ = rauh_words.loc[rauh_words['sentiment'] == -1].feature
+rauh_words = pd.read_csv('rauh_sentiment_dict.csv', sep = ',')
+rauh_dict_positiv = list(rauh_words.loc[rauh_words['sentiment'] == 1].feature.str.strip())
+rauh_dict_negativ = list(rauh_words.loc[rauh_words['sentiment'] == -1].feature.str.strip())
 
 articles['tokens_unigram'] = articles['article'].apply(word_tokenize, language='german')
 
@@ -122,8 +125,6 @@ articles['sentiment'] = articles['sentiment_positiv'] - articles['sentiment_nega
 
 ```r
 # R
-library(quanteda)
-
 rauh_words <- read_csv('rauh_sentiment_dict.csv')
 rauh_dict <- dictionary(list(positiv = (rauh_words %>% 
                                           filter(sentiment == '1') %>% 
@@ -169,16 +170,25 @@ Erneut können wir in R auf eine fertige Funktion aus dem quanteda-Paket zurück
 # Python
 articles_sample = articles.head(10)
 unigram_tokens_sample = [ token for token_list in articles_sample['tokens_unigram'].tolist() for token in token_list ]
-unigram_types_sample = list(set(unigram_tokens))
+unigram_types_sample = list(set(unigram_tokens_sample))
 
-fcm = np.zeros((len(unigram_types_sample), len(unigram_types_sample))
+fcm = pd.DataFrame(columns=unigram_types_sample)
+for single_type in unigram_types_sample:
+    fcm.loc[len(fcm)] = 0
 
-for position_focus in range(len(unigram_tokens_sample)):
-  for position_window in range(1, 6):
-      fcm[unigram_tokens_sample[position_focus]][unigram_tokens_sample[position_focus + position_window]] += 1/position_window
-      fcm[unigram_tokens_sample[position_focus]][unigram_tokens_sample[position_focus - position_window]] += 1/position_window
+for article_index in range(0, len(articles_sample)):
+    article_tokens = articles_sample.loc[article_index, 'tokens_unigram']
+    for current_token_position in range(0, len(article_tokens)):
+        current_token = article_tokens[current_token_position]
+        for position_window in range(1, 6):
+            if current_token_position + position_window < len(article_tokens):
+                current_comparing_token = article_tokens[current_token_position + position_window]
+                fcm.loc[unigram_types_sample.index(current_token), current_comparing_token] += 1/position_window
+            if current_token_position - position_window >= 0:
+                current_comparing_token = article_tokens[current_token_position - position_window]
+                fcm.loc[unigram_types_sample.index(current_token), current_comparing_token] += 1/position_window
 
-fcm = np.matrix(fcm)
+print(fcm)
 ```
 
 ```r
@@ -195,8 +205,7 @@ articles %>%
   as_tibble()
 ```
 
-1. Generieren Sie eine Kollokationsmatrix der ersten zehn Texte
-
+1. Generieren Sie eine Kollokationsmatrix für den Text `Die Klausur, die die Studierenden schreiben, ist anspruchsvoll.`.
 
 
 ## Lösungsansätze
@@ -244,6 +253,7 @@ articles %>%
 #### Volltextsuche und reguläre Ausdrücke
 
 ```python
+# Python
 articles.loc[articles['article'].str.contains('Sebastian Kurz')]
 articles.loc[articles['article'].str.contains('K[aä]tz(ch)?en')]
 
@@ -252,6 +262,7 @@ articles.loc[articles['article'].str.contains('K[aä]tz(ch)?en')].groupby(['ress
 ```
 
 ```r
+# R
 articles %>%
   filter(str_detect(article, 'Sebastian Kurz'))
   
@@ -346,4 +357,37 @@ articles_kanzlerschaft %>%
 
 ### Kollokationsmatrizen
 
-1. Generieren Sie eine Kollokationsmatrix der ersten zehn Texte
+```python
+# Python
+tokens = [ 'die', 'klausur', ',', 'die', 'die', 'studierenden', 'schreiben', ',', 'ist', 'anspruchsvoll', '.' ]
+types = list(set(tokens))
+
+fcm = pd.DataFrame(columns=types)
+for single_type in types:
+    fcm.loc[len(fcm)] = 0
+
+for current_token_position in range(0, len(tokens)):
+	current_token = tokens[current_token_position]
+	for position_window in range(1, 6):
+		if current_token_position + position_window < len(tokens):
+			current_comparing_token = tokens[current_token_position + position_window]
+			fcm.loc[types.index(current_token), current_comparing_token] += 1/position_window
+		if current_token_position - position_window >= 0:
+			current_comparing_token = tokens[current_token_position - position_window]
+			fcm.loc[types.index(current_token), current_comparing_token] += 1/position_window
+
+print(fcm)
+```
+
+```r
+# R
+'Die Klausur, die die Studierenden schreiben, ist anspruchsvoll.' %>% 
+  tokens() %>%
+  tokens_tolower() %>% 
+  fcm(context = 'window',
+      window = 5,
+      count = 'weighted',
+      weights = 1/1:5) %>% 
+  convert(to = 'data.frame') %>% 
+  as_tibble()
+```
