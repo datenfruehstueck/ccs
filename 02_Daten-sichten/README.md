@@ -1,7 +1,8 @@
 ---
-title: Daten sichten
-chapter: 01
+title: "Daten sichten"
+chapter: "02"
 layout: default
+permalink: /02-daten-sichten/
 ---
 
 # Daten sichten

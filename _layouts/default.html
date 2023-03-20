@@ -6,21 +6,22 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Roboto+Mono&display=swap">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css" integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-	<link rel="stylesheet" href="web_assets/style.css">
-	<title>{{ page.title }} // Computational Communication Science // Online-Begleitmaterial</title>
+	<link rel="stylesheet" href="/web_assets/style.css">
+	<base href="{{ site.baseurl }}" />
+	<title>{{ page.title }} // {{ site.title }}</title>
   </head>
   <body>
 	<header class="sticky-top">
 	  <nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container-xl">
-		  <a class="navbar-brand" href="/ccs/">CCS // Begleitmaterial</a>
+		  <a class="navbar-brand" href="/">CCS // Begleitmaterial</a>
 		  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		  </button>
 		  <div class="collapse navbar-collapse" id="navbarNav">
 		    <ul class="navbar-nav mx-auto">
-			  <li class="nav-item"><a href="/ccs/01_Was-ist-CCS/" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Was ist Computational Communication Science?">01</a></li>
-			  <li class="nav-item"><a href="/ccs/02_Daten-sichten/" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Daten sichten">02</a></li>
+			  <li class="nav-item"><a href="/01-was-ist-ccs/" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Was ist Computational Communication Science?">01</a></li>
+			  <li class="nav-item"><a href="/02-daten-sichten/" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Daten sichten">02</a></li>
 			  <li class="nav-item"><a href="/" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Daten bewerten">03</a></li>
 			  <li class="nav-item"><a href="/" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Forschungssoftware entwickeln">04</a></li>
 			  <li class="nav-item"><a href="/" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Daten beziehen">05</a></li>
@@ -57,6 +58,6 @@
 	</footer>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.bundle.min.js" integrity="sha512-i9cEfJwUwViEPFKdC1enz4ZRGBj8YQo6QByFTF92YXHi7waCqyexvRD75S5NVTsSiTv7rKWqG9Y5eFxmRsOn0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<script src="web_assets/main.js"></script>
+	<script src="/web_assets/main.js"></script>
   </body>
 </html>
