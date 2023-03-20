@@ -1,4 +1,9 @@
-# Eigene Daten generieren
+---
+title: "Eigene Daten generieren"
+chapter: "07"
+layout: default
+permalink: /07-eigene-daten-generieren/
+---
 
 ## Trockenübungen
 

@@ -5,8 +5,6 @@ layout: default
 permalink: /02-daten-sichten/
 ---
 
-# Daten sichten
-
 ## Trockenübungen
 
 1. Beschreiben Sie, was Merkmalsträger, Merkmale, Merkmalsausprägungen und Werte sind.

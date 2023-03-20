@@ -1,4 +1,9 @@
-# Texte als Daten I
+---
+title: "Texte als Daten I"
+chapter: "08"
+layout: default
+permalink: /08-texte-als-daten-1/
+---
 
 ## Trockenübungen
 

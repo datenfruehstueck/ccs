@@ -1,4 +1,9 @@
-# Daten beziehen
+---
+title: "Daten beziehen"
+chapter: "04"
+layout: default
+permalink: /04-daten-beziehen/
+---
 
 ## Trockenübungen
 

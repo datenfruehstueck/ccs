@@ -1,5 +1,9 @@
-# Texte als Daten II
-
+---
+title: "Texte als Daten II"
+chapter: "09"
+layout: default
+permalink: /09-texte-als-daten-2/
+---
 ## Trockenübungen
 
 1. Was sind Stoppwörter?

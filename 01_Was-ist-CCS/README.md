@@ -1,8 +1,8 @@
 ---
-title: "Netzwerke als Daten"
-chapter: "12"
+title: "Was ist Computational Communication Science (CCS)?"
+chapter: "01"
 layout: default
-permalink: /12-netzwerke-als-daten/
+permalink: /01-was-ist-ccs/
 ---
 
 ## Trockenübungen

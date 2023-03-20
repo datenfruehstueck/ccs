@@ -1,4 +1,9 @@
-# Bilder und multimodale Daten
+---
+title: "Netzwerke als Daten"
+chapter: "14"
+layout: default
+permalink: /14-bilder-und-multimodale-daten/
+---
 
 ## Trockenübungen
 

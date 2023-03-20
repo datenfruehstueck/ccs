@@ -1,4 +1,9 @@
-# Fremde Daten sammeln
+---
+title: "Fremde Daten sammeln"
+chapter: "06"
+layout: default
+permalink: /06-fremde-daten-sammeln/
+---
 
 ## Trockenübungen
 

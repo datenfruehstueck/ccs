@@ -1,4 +1,9 @@
-# Maschinelles Lernen II (Unüberwachtes Lernen)
+---
+title: "Maschinelles Lernen 2 (unüberwachtes Lernen)"
+chapter: "11"
+layout: default
+permalink: /11-maschinelles-lernen-2/
+---
 
 ## Trockenübungen
 

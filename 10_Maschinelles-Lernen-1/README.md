@@ -1,4 +1,9 @@
-# Maschinelles Lernen I (Überwachtes Lernen)
+---
+title: "Maschinelles Lernen I (überwachtes Lernen)"
+chapter: "10"
+layout: default
+permalink: /10-maschinelles-lernen-1/
+---
 
 ## Trockenübungen
 
