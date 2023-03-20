@@ -1,0 +1,13 @@
+header.sticky-top {
+  z-index: 999;
+}
+
+body {
+  font-family: 'Roboto Slab', serif;
+  font-size: 16px;
+}
+
+code, pre, form.d-flex input[type=search] {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.8em;
+}
