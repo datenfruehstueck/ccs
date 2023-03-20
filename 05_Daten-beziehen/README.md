@@ -1,8 +1,8 @@
 ---
 title: "Daten beziehen"
-chapter: "04"
+chapter: "05"
 layout: default
-permalink: /04-daten-beziehen/
+permalink: /05-daten-beziehen/
 ---
 
 ## Trockenübungen
