@@ -1,3 +1,9 @@
+---
+title: Daten sichten
+chapter: 01
+layout: default
+---
+
 # Daten sichten
 
 ## Trockenübungen
