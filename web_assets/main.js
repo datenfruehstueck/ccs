@@ -18,6 +18,7 @@ $(function () {
 	  for(var i = 0; i < ccs_search.length; i++) {
 		  if(ccs_search[i].score > 0) {
 			  results.push(ccs_search[i]);
+		  }
 	  }
 	  results.sort((a,b) => a.score - b.score);
 	  return results;

@@ -3,10 +3,9 @@
 # adapted from tipue-search
 layout: null
 ---
-{%- assign documents = site.documents -%}
 {%- assign excluded_files = site.ccs_search.exclude.files -%}
 const ccs_search = [
-{%- for document in documents -%}
+{%- for document in site.html_pages -%}
   {%- unless document.exclude_from_search == true or excluded_files contains document.path -%}
     {
       "title": {{ document.title | smartify | strip_html | normalize_whitespace | jsonify }},
