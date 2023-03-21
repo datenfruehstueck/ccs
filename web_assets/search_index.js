@@ -7,11 +7,12 @@ layout: null
 const ccs_search = [
 {%- for document in site.documents -%}
   {%- unless document.exclude_from_search == true or excluded_files contains document.path -%}
-  {
-    "title": {{ document.title | smartify | strip_html | normalize_whitespace | jsonify }},
-	"chapter": {{ document.chapter | jsonify }},
-    "text": {{ document.content | strip_html | normalize_whitespace | jsonify }},
-    "url": {{ document.url | relative_url | jsonify }}
-  }{%- unless forloop.last -%},{%- endunless -%}
+    {
+      "title": {{ document.title | smartify | strip_html | normalize_whitespace | jsonify }},
+	  "chapter": {{ document.chapter | jsonify }},
+      "text": {{ document.content | strip_html | normalize_whitespace | jsonify }},
+      "url": {{ document.url | relative_url | jsonify }}
+    }{%- unless forloop.last -%},{%- endunless -%}
+  {%- endunless -%}
 {%- endfor -%}
 ];
