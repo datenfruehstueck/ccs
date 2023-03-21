@@ -2,7 +2,7 @@
 title: "Daten bewerten"
 chapter: "03"
 layout: default
-permalink: /02-daten-bewerten/
+permalink: /03-daten-bewerten/
 ---
 
 ## Trockenübungen
