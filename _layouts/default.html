@@ -37,7 +37,7 @@
 			</ul>
 			<form class="d-flex">
 			  <div class="input-group">
-			    <input class="form-control" type="search" placeholder="Durchsuchen ..." aria-label="Durchsuchen ...">
+			    <input class="form-control" type="search" placeholder="Durchsuchen ..." aria-label="Durchsuchen ..." pattern=".{3,}" id="q">
 			    <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
 			  </div>
 			</form>
@@ -50,14 +50,19 @@
 	  {{ content }}
 	</div>
 	<footer class="container-xl mt-5 mb-2">
-	  <div class="border-top border-secondary pt-4">
+	  <div class="border-top border-secondary-subtle pt-4">
 	    <p class="text-center text-muted col-8 mx-auto">
-		  Online-Begleitmaterial zum Buch <a href="https://link.springer.com/book/9783658401702" target="_blank">Computational Communication Science: Eine Einführung</a> von <a href="https://haim.it/" target="_blank">Prof. Dr. Mario Haim</a>, erstmals erschienen 2023 bei Springer VS. Die Struktur der Materialien hier orientiert sich an den Abschnitten des Buchs. 
+		  Online-Begleitmaterial zum Buch <a href="https://link.springer.com/book/9783658401702" target="_blank">Computational Communication Science: Eine Einführung</a> von <a href="https://haim.it/" target="_blank">Prof. Dr. Mario Haim</a>, erstmals erschienen 2023 bei Springer VS. Die Struktur der Materialien hier orientiert sich an den Abschnitten des Buchs. Die Rechte des Buchs liegen beim Verlag und dem Autor, die hier veröffentlichten Begleitmaterialien unterliegen der <a href="https://datenfruehstueck.github.io/ccs/LICENSE.txt" target="_blank">CC-BY-4.0-Lizenz</a>.
 		</p>
 	  </div>
 	</footer>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.bundle.min.js" integrity="sha512-i9cEfJwUwViEPFKdC1enz4ZRGBj8YQo6QByFTF92YXHi7waCqyexvRD75S5NVTsSiTv7rKWqG9Y5eFxmRsOn0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	{% if page.tipue_search.active %}
+	<script src="/ccs/web_assets/tipuesearch_content.js"></script>
+	<script src="/ccs/web_assets/tipuesearch_set.js"></script>
+	<script src="/ccs/web_assets/tipuesearch.min.js"></script>
+	{% endif %}
 	<script src="/ccs/web_assets/main.js"></script>
   </body>
 </html>
