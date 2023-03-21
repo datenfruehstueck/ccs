@@ -35,13 +35,11 @@
 			  <li class="nav-item"><a href="/ccs/13-gruppen-und-sequenzen-als-daten/" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Gruppen und Sequenzen als Daten">13</a></li>
 			  <li class="nav-item"><a href="/ccs/14-bilder-und-multimodale-daten/" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bilder und multimodale Daten">14</a></li>
 			</ul>
-			<form class="d-flex">
-			  <div class="input-group">
-			    <input class="form-control" type="search" placeholder="Durchsuchen ..." aria-label="Durchsuchen ..." id="q">
-				<div class="dropdown">
-			      <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>				  
-				  <ul class="dropdown-menu dropdown-menu-end" id="q_results">
-				  </ul>
+			<form class="d-flex" id="search_form">
+			  <div class="input-group dropdown">
+			    <input class="form-control border-end-0" type="search" placeholder="Durchsuchen ..." aria-label="Durchsuchen ..." id="q">
+				<span class="input-group-text bg-body border-start-0"><i class="bi bi-search"></i></span>
+				<ul class="dropdown-menu dropdown-menu-end" id="q_results"></ul>
 			  </div>
 			</form>
 		  </div>

@@ -3,16 +3,10 @@
 # adapted from tipue-search
 layout: null
 ---
-{%- assign index = "" | split: "" -%}
 {%- assign excluded_files = site.ccs_search.exclude.files -%}
-{%- assign documents = site.documents -%}
-{%- for document in documents -%}
+const ccs_search = [
+{%- for document in site.documents -%}
   {%- unless document.exclude_from_search == true or excluded_files contains document.path -%}
-    {%- assign index = index | push: document | uniq -%}
-  {%- endunless -%}
-{%- endfor -%}
-var ccs_search = [
-{%- for document in index -%}
   {
     "title": {{ document.title | smartify | strip_html | normalize_whitespace | jsonify }},
 	"chapter": {{ document.chapter | jsonify }},
