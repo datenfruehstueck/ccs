@@ -4,7 +4,7 @@
 layout: null
 ---
 {%- assign excluded_files = site.ccs_search.exclude.files -%}
-const ccs_search = [
+var ccs_search = [
 {%- for document in site.html_pages -%}
   {%- unless document.exclude_from_search == true or excluded_files contains document.path -%}
     {
