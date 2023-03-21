@@ -37,8 +37,11 @@
 			</ul>
 			<form class="d-flex">
 			  <div class="input-group">
-			    <input class="form-control" type="search" placeholder="Durchsuchen ..." aria-label="Durchsuchen ..." pattern=".{3,}" id="q">
-			    <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
+			    <input class="form-control" type="search" placeholder="Durchsuchen ..." aria-label="Durchsuchen ..." id="q">
+				<div class="dropdown">
+			      <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>				  
+				  <ul class="dropdown-menu dropdown-menu-end" id="q_results">
+				  </ul>
 			  </div>
 			</form>
 		  </div>

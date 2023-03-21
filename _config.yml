@@ -1,9 +1,6 @@
 title: Computational Communication Science // Begleit- und Übungsmaterialien
 description: Begleit- und Übungsmaterial zum Lehrbuch Computational Communication Science (Haim, erschienen 2023 bei Springer VS).
 baseurl: /
-tipue_search:
-  active: true
-  include:
-    pages: true
+ccs_search:
   exclude:
     files: [LICENSE.txt]
