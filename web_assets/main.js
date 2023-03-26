@@ -43,11 +43,21 @@ $(function() {
         var results = search_index(q);
         $('#q_results > li').remove();
         for (var i = 0; i < results.length; i++) {
-          $('#q_results').append('<li><a class="dropdown-item" href="' + results[i].url + '">' + results[i].chapter + ' // ' + results[i].title + '</a></li>');
+          $('#q_results').append('<li><a class="dropdown-item" href="' + results[i].url + '?highlight=' + q + '">' + results[i].chapter + ' // ' + results[i].title + '</a></li>');
         }
         new bootstrap.Dropdown('#q_results');
         $('#q_results').show();
       }
     }, 500);
   });
+
+  var urlParams = new URLSearchParams(document.location.search);
+  if (urlParams.has('highlight')) {
+    var highlightTerms = urlParams.get('highlight').split('+'),
+        pageHtml = $('body > div.container-xl').html();
+    for (var i = 0; i < highlightTerms.length; i++) {
+      pageHtml = pageHtml.replace(new RegExp(highlightTerms[i], 'gi'), (match) => `<mark>${match}</mark>`);
+    }
+    $('body > div.container-xl').html(pageHtml);
+  }
 })
