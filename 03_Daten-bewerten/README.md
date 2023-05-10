@@ -20,7 +20,7 @@ permalink: /03-daten-bewerten/
 
 ### Instagram-Abos
 
-Laden Sie den [Instagram-Abo-Datensatz](https://raw.githubusercontent.com/datenfruehstueck/ccs/main/03_Daten-bewerten/instagram-abos.csv) wie beim [letzten Mal](https://github.com/datenfruehstueck/ccs/02_Daten-sichten/).
+Laden Sie den [Instagram-Abo-Datensatz](https://raw.githubusercontent.com/datenfruehstueck/ccs/main/03_Daten-bewerten/instagram-abos.csv) wie beim [letzten Mal](/ccs/02-daten-sichten/).
 
 1. Zählen Sie die Anzahl der darin enthaltenen Merkmalsträger. 
 1. Zählen Sie die Anzahl der unterschiedlichen Geschlechter (und ihrer fehlenden Werte).
@@ -30,7 +30,7 @@ Laden Sie den [Instagram-Abo-Datensatz](https://raw.githubusercontent.com/datenf
 
 ### Histogramme
 
-Nun wollen wir uns endlich Histogrammen widmen. Dafür setzen wir zunächst auf den **erstwaehlende.csv**-Datensatz aus den letzten Übungen. Wenn das also noch nicht läuft, dann machen Sie sich zunächst erneut [damit](https://github.com/datenfruehstueck/ccs/02_Daten-sichten/) vertraut. 
+Nun wollen wir uns endlich Histogrammen widmen. Dafür setzen wir zunächst auf den **erstwaehlende.csv**-Datensatz aus den letzten Übungen. Wenn das also noch nicht läuft, dann machen Sie sich zunächst erneut [damit](/ccs/02-daten-sichten/) vertraut. 
 
 In R sind wir dann bereits dafür direkt startklar, in Python müssen wir noch die Bibliothek *matplotlib* installieren (Terminal in PyCharm: `pip install matplotlib`) und im Skript einbinden (`import matplotlib.pyplot as plt`). Anschließend wählen wir das gewünschte Merkmal aus (hier: Alter) und weisen an, ein Histogramm auszuspucken. Den Rest übernehmen die Bibliotheken und Pakete für uns.
 
