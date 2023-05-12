@@ -118,7 +118,6 @@ are_you_a_leap_year(2038)
 for (jahr in 1900:1950) {
   if (are_you_a_leap_year(jahr)) {
     print(jahr)
-    
   }
 }
 
