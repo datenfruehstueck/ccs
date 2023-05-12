@@ -171,8 +171,8 @@ Ab hier folgen nun verschiedene Lösungswege zu den oben vorgestellten Übungen.
 ### Trockenübungen
 
 1. Protokoll: `https`, Host: `www.ifkw.uni-muenchen.de`, Pfad: `funktionen/suche/index.html`, ein Parameter namens `q` mit dem Wert `bachelorarbeit`
-1. Siehe Unterlagen.
-1. Siehe Unterlagen.
-1. Siehe Unterlagen.
-1. Siehe Unterlagen.
-1. Siehe Unterlagen.
+1. Es kommt zum Fünfschritt zwischen Client und Server (1. Client/Browser zerlegt URL, 2. Client/Browser schlägt Server-Anschrift nach und schickt Anfrage, 3. Server verarbeitet Anfrage, 4. Server schickt Hypertext-Antwort zurück, 5. Client/Browser empfängt/interpretiert Antwort).
+1. Innerhalb der EU dürfen Forschende entsprechende Beiträge für die nichtkommerzielle akademische Forschung sammeln/scrapen. Einschränkungen gibt es allerdings bei der Weitergabe dieser Daten. 
+1. Scraping bezieht sich auf statische Webseiteninhalte, ABT kann durch die Emulation menschlichen Surfverhaltens auch mit interaktiven Inhalten umgehen. ABT eignet sich außerdem besser für experimentelle Forschungsdesigns.
+1. Sehr persönliche und grundsensible Daten. Außerdem mitunter schwierig für Teilnehmende, Tragweite der gesammelten Daten einzuschätzen -- Menschen gehören hier also unbedingt in den Mittelpunkt der Überlegungen gestellt. 
+1. Rechtsicher, hohe Datenqualität, nicht reaktiv, gut mit Befragungsdaten kombinierbar.
