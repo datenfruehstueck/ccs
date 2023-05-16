@@ -72,12 +72,30 @@ Recherchieren und ergänzen Sie die restlichen Schritte:
 
 Für das Parsing und Tagging ist eine genaue Kenntnis der Grammatik nötig. Entsprechende Modelle müssen wir deshalb zunächst installieren. Dafür gibt es mehrere zur Auswahl, wir bedienen uns hier der Anschaulichkeit halber gleich zwei verschiedener. Anschließend versuchen wir uns im Parsing und Tagging eines einfachen (und bereits bekannten) Satzes. 
 
+Für Python können wir auf die [spaCy-Bibliothek](https://spacy.io/usage) zurückgreifen. Dafür müssen wir einmalig die Bibliothek (mit `pip`) installieren und das entsprechende Modell `de_core_news_md` herunterladen. 
+
 In R nutzen wir dafür einerseits ein *UDPipe*-Modell, das von Forschenden der Karls-Universität in Tschechien betrieben wird. Nach der Installation des [udpipe-Pakets](https://cran.r-project.org/web/packages/udpipe/) müssen wir einmalig das deutsche Sprachmodell herunterladen, bevor wir das eigentliche Parsing und Tagging durchführen können (das dauert mitunter ein paar Minuten). Außerdem nutzen wir auch mit R das [spaCy(r)-Paket](http://spacyr.quanteda.io/) mit dem Modell `de_core_news_md`, für das unter Windows aber noch zusätzlich [miniconda](https://conda.io/projects/conda/en/latest/user-guide/install/windows.html) installiert werden muss.
 
 ```python
 # Python
 
+## zunächst Installation über die Kommandozeile
+pip install -U pip setuptools wheel
+pip install -U spacy
+python -m spacy download de_core_news_md
 
+## eigentliches Parsing/Tagging
+import spacy
+
+model = spacy.load("de_core_news_md")
+text = "Die Klausur, die die Studierenden schreiben, ist anspruchsvoll."
+
+text_annotated = model(text)
+
+for token in text_annotated:
+  print(str(token) + ": ")
+  print(" - " + token.tag_)
+  print(" - " + token.pos_)
 ```
 
 ```r
@@ -121,13 +139,27 @@ Für NER greifen wir ebenfalls auf spaCy zurück und müssen zunächst die entsp
 
 ```python
 # Python
+import spacy
 
+model = spacy.load("de_core_news_md")
+text = "Die Klausur, die Christian Lindner schreibt, ist anspruchsvoll."
 
+text_annotated = model(text)
+
+## Wörter
+for token in text_annotated:
+  if token.ent_iob != 2:
+    print(str(token) + " is part of an entity")
+
+## Phrasen
+for entity in text_annotated.ents:
+  print(entity.text + ": " + entity.label_)
 ```
 
 ```r
 # R
 
+## Wörter
 'Die Klausur, die Christian Lindner schreibt, ist anspruchsvoll.' %>%
   corpus() %>%
   spacy_parse(pos = TRUE,
@@ -139,6 +171,7 @@ Für NER greifen wir ebenfalls auf spaCy zurück und müssen zunächst die entsp
   entity_extract(type = 'all') %>%
   as_tibble()
 
+## Phrasen
 'Die Klausur, die Christian Lindner schreibt, ist anspruchsvoll.' %>%
   corpus() %>%
   spacy_parse(pos = TRUE,
@@ -152,19 +185,28 @@ Für NER greifen wir ebenfalls auf spaCy zurück und müssen zunächst die entsp
 ```
 
 1. Extrahieren Sie Entitäten aus den ersten zehn Dokumenten des 10kGNAD-Datensatzes.
-1. Finden Sie die häufigsten drei Entitäten im gesamten 10kGNAD-Datensatz. 
 
 
 ### Word Embeddings
 
 Mit spaCy haben wir bereits ein vektorbasiertes Sprachmodell heruntergeladen, das wir jetzt auch für Word Embeddings nutzen können. Die Funktion dafür ist recht einfach, das Ergebnis aber sehr unübersichtlich -- immerhin erhalten wir schlicht dreihundert Zahlenwerte für jeden Begriff zurück.
 
-Allerdings wurde die Funktion, Vektoren einzeln auszugeben, erst später in die Pakete eingeführt, sodass das R-Paket die entsprechende Funktionalität aktuell nicht standardmäßig beinhaltet. Wir müssen für R also zunächst eine eigene Version für [spaCyr](https://github.com/quanteda/spacyr/tree/issue-171) installieren, um hier einen Einblick zu bekommen. 
+Mit Python müssen wir dafür auf die verarbeitende Schiene von spaCy wechseln, indem wir den Befehl `pipe` nutzen. Der ist für viele Dokumente ausgelegt, sodass wir nicht einfach unseren Text übergeben können, sondern nur eine Listie von Texten. In unserem Fall eine Liste mit genau einem (unserem!) Text. Anschließend können wir die Vektoren eines jeden Tokens, die hier "Tensor" heißen, ausgeben.
+
+Mit R ist dieser Schritt etwas komplizierter. Denn die Funktion, Vektoren einzeln auszugeben, wurde erst später in die Pakete eingeführt, sodass das R-Paket die entsprechende Funktionalität aktuell nicht standardmäßig beinhaltet. Wir müssen für R also zunächst eine eigene Version für [spaCyr](https://github.com/quanteda/spacyr/tree/issue-171) installieren, um hier einen Einblick zu bekommen. 
 
 ```python
 # Python
 
+import spacy
 
+model = spacy.load("de_core_news_md")
+texts = [ "Die Klausur, die die Studierenden schreiben, ist anspruchsvoll." ]
+
+texts_processed = model.pipe(texts)
+
+for document in texts_processed:
+  print(document.tensor)
 ```
 
 ```r
@@ -192,12 +234,25 @@ spacy_initialize(model = 'de_core_news_md')
 
 Für die Erstellung von Document-Feature-Matrizen greifen wir der Einfachheit halber hier nur auf die pre-processeden Typen zurück. Im Grunde könnten wir eine DFM aber auch aus den gerade extrahierten Nounphrases bauen. Auf Basis dieser DFM können wir dann die Anzahl der Features, die (unveränderte) Anzahl der Dokumente sowie die Sparsity ableiten. 
 
+Während das in R sehr einfach über Hilfsfunktionen möglich ist, brauchen wir in Python ein etwas technischeres Begriffsverständnis. DFMs sind demnach Matrizen, wobei je Dokument (Zeile) ein Vektor aus Häufigkeiten von Tokens vorliegt. Die entsprechenden Funktionen entnehmen wir der [sklearn](https://scikit-learn.org/)-Bibliothek, die wir noch installieren müssen (`pip install scikit-learn`). 
+
 Für den weiteren Verlauf reduzieren wir die DFMs allerdings drastisch, um den Rechenaufwand für die noch ausstehenden Visualisierungen gering zu halten. Deshalb behalten wir nur Wörter, die in mindestens einem Prozent, aber gleichzeitig in weniger als vierzig Prozent aller Dokumente vorkommen.
 
 ```python
 # Python
+import pandas as pd
+from sklearn.feature_extraction.text import CountVectorizer
 
+articles_csv = pd.read_csv('10kgnad_articles.csv', sep = ';', header = None, names = [ 'ressort', 'article' ], quotechar = "'")
+articles = articles_csv["article"]
 
+model_count = CountVectorizer(max_df = 0.40, min_df = 0.01)
+articles_counted = model_count.fit_transform(articles)
+dfm = pd.DataFrame(articles_counted.toarray(), columns = model_count.get_feature_names_out())
+
+print(model_count.get_feature_names_out().size)
+print(articles_counted.size)
+print(sum((dfm == 0).astype(int).sum())/dfm.size)
 ```
 
 ```r
@@ -216,32 +271,17 @@ ndoc(articles_dfm)
 sparsity(articles_dfm)
 ```
 
-Um aus DFMs Wortwolken oder die Keyness zu berechnen, benötigen wir in R noch eigene zusätzliche Pakete, die aber Teil des erweiterten quanteda-Universums sind. Sind [quanteda.textplots](https://cran.r-project.org/web/packages/quanteda.textplots/) und [quanteda.textstats](https://cran.r-project.org/web/packages/quanteda.textstats/) aber einmal installiert, ist die Handhabung für die Berechnung der Keyness und die Erstellung von Wortwolken indes ein Kinderspiel.
+Um aus DFMs Wortwolken zu berechnen, brauchen wir in Python die separate [wordcloud](https://pypi.org/project/wordcloud/)-Bibliothek zur Visualisierung und müssen zudem die Häufigkeiten selbst berechnen. In R benötigen wir nur ein Paket, das Teil des erweiterten quanteda-Universums ist. Ist [quanteda.textplots](https://cran.r-project.org/web/packages/quanteda.textplots/) einmal installiert, ist die Handhabung für die die Erstellung von Wortwolken mit R ein Kinderspiel.
 
 ```python
 # Python
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
 
-
-```
-
-```r
-# R
-library(quanteda.textplots)
-library(quanteda.textstats)
-
-articles_dfm %>%
-  dfm_group(groups = ressort) %>%
-  textstat_keyness(target = 'Inland') %>%
-  textplot_keyness(n = 10)
-```
-
-1. Identifizieren Sie die zentralen Begriffe für den Bereich Web.
-1. Finden Sie eine Lösung, das Ressort Inland nicht gegen alle anderen (wie im Beispiel), sondern nur gegen das Ressort International zu stellen.
-
-```python
-# Python
-
-
+dfm_dict = dict(zip(model_count.get_feature_names_out(), articles_counted.sum(axis = 0).tolist()[0]))
+cloud = WordCloud().generate_from_frequencies(dfm_dict)
+plt.imshow(cloud)
+plt.axis("off")
 ```
 
 ```r
@@ -275,7 +315,9 @@ Ab hier folgen nun verschiedene Lösungswege zu den oben vorgestellten Übungen.
 ```python
 # Python
 
-
+## TODO: pre-process: interpunktion, zahlen, urls, stoppwörter(lsite), stemming
+https://cssbook.net/content/chapter10.html#sec-stopwords
+https://cssbook.net/content/chapter10.html#sec-punctuation
 ```
 
 ```r
@@ -295,8 +337,19 @@ articles_corpus %>%
 
 ```python
 # Python
+import spacy
+import pandas as pd
 
+model = spacy.load("de_core_news_md")
+articles = pd.read_csv('10kgnad_articles.csv', sep = ';', header = None, names = [ 'ressort', 'article' ], quotechar = "'").loc[1:10]
 
+for article in articles['article']:
+  article_annotated = model(article)
+  for token in article_annotated:
+    print(str(token) + ": ")
+    print(" - " + token.tag_)
+    print(" - " + token.pos_)
+    print(" - " + token.lemma_)
 ```
 
 ```r
@@ -318,8 +371,16 @@ articles_corpus %>%
 
 ```python
 # Python
+import spacy
+import pandas as pd
 
+model = spacy.load("de_core_news_md")
+articles = pd.read_csv('10kgnad_articles.csv', sep = ';', header = None, names = [ 'ressort', 'article' ], quotechar = "'").loc[1:10]
 
+text_annotated = model(text)
+
+for entity in text_annotated.ents:
+  print(entity.text + ": " + entity.label_)
 ```
 
 ```r
@@ -334,19 +395,6 @@ articles_tokens %>%
               dependency = TRUE) %>%
   entity_extract(type = 'all') %>%
   as_tibble()
-
-articles_corpus %>%
-  spacy_parse(pos = TRUE,
-              tag = TRUE,
-              lemma = FALSE,
-              entity = TRUE,
-              nounphrase = TRUE,
-              dependency = TRUE) %>%
-  entity_extract(type = 'all') %>%
-  as_tibble() %>%
-  count(entity) %>%
-  slice_max(n,
-            n = 3)
 ```
 
 
@@ -354,23 +402,29 @@ articles_corpus %>%
 
 ```python
 # Python
+import pandas as pd
+from sklearn.feature_extraction.text import CountVectorizer
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+
+articles_csv = pd.read_csv('10kgnad_articles.csv', sep = ';', header = None, names = [ 'ressort', 'article' ], quotechar = "'")
+articles_csv = articles_csv.loc[articles['ressort'].str.contains('Wissenschaft')]
+articles = articles_csv["article"]
+
+model_count = CountVectorizer(max_df = 0.40, min_df = 0.01)
+articles_counted = model_count.fit_transform(articles)
+
+dfm_dict = dict(zip(model_count.get_feature_names_out(), articles_counted.sum(axis = 0).tolist()[0]))
+cloud = WordCloud().generate_from_frequencies(dfm_dict)
+plt.imshow(cloud)
+plt.axis("off")
 
 
+## TODO: noch eine wordcloud, mit pre-processeder DFM
 ```
 
 ```r
 # R
-articles_dfm %>%
-  dfm_group(groups = ressort) %>%
-  textstat_keyness(target = 'Web') %>%
-  textplot_keyness(n = 10)
-
-articles_dfm %>%
-  dfm_subset(ressort %in% c('Inland', 'International')) %>%
-  dfm_group(groups = ressort) %>%
-  textstat_keyness(target = 'Inland') %>%
-  textplot_keyness(n = 10)
-
 articles_dfm %>%
   dfm_subset(ressort == 'Wissenschaft') %>%
   textplot_wordcloud(maxwords = 100)
