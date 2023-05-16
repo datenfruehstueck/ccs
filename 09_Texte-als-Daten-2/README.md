@@ -314,10 +314,33 @@ Ab hier folgen nun verschiedene Lösungswege zu den oben vorgestellten Übungen.
 
 ```python
 # Python
+import string
+import re
+from nltk.stem.snowball import GermanStemmer
 
-## TODO: pre-process: interpunktion, zahlen, urls, stoppwörter(lsite), stemming
-https://cssbook.net/content/chapter10.html#sec-stopwords
-https://cssbook.net/content/chapter10.html#sec-punctuation
+punctuation = string.punctuation
+stopwords = ['der', 'die', 'das', 'ein', 'eine', 'einen', 'und', 'oder']
+stemmer = GermanStemmer()
+
+for i in range(len(articles['article'])):
+  # remove numbers with regular expression
+  article_without_numbers = re.sub('\d+', '', articles['article'][i])
+  
+  # remove URLs with regular expression
+  article_without_urls = re.sub('http\S+', '', article_without_numbers)
+  
+  # tokenize
+  article_tokens = word_tokenize(article_without_urls, language='german')
+  
+  # remove punctuation/stopwords from token list
+  tokens_without_punctuation = [ token for token in article_tokens if token not in punctuation ]
+  tokens_without_stopwords = [ token for token in tokens_without_punctuation if token not in stopwords ]
+  
+  # stem
+  tokens_stemmed = tokens_without_stopwords.apply(stemmer.stem)
+  
+  # use final list
+  articles['tokens_unigram'][i] = tokens_stemmed
 ```
 
 ```r
@@ -406,6 +429,9 @@ import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
+import string
+import re
+from nltk.stem.snowball import GermanStemmer
 
 articles_csv = pd.read_csv('10kgnad_articles.csv', sep = ';', header = None, names = [ 'ressort', 'article' ], quotechar = "'")
 articles_csv = articles_csv.loc[articles['ressort'].str.contains('Wissenschaft')]
@@ -420,7 +446,38 @@ plt.imshow(cloud)
 plt.axis("off")
 
 
-## TODO: noch eine wordcloud, mit pre-processeder DFM
+punctuation = string.punctuation
+stopwords = ['der', 'die', 'das', 'ein', 'eine', 'einen', 'und', 'oder']
+stemmer = GermanStemmer()
+
+for i in range(len(articles_csv['article'])):
+  # remove numbers with regular expression
+  article_without_numbers = re.sub('\d+', '', articles_csv['article'][i])
+  
+  # remove URLs with regular expression
+  article_without_urls = re.sub('http\S+', '', article_without_numbers)
+  
+  # tokenize
+  article_tokens = word_tokenize(article_without_urls, language='german')
+  
+  # remove punctuation/stopwords from token list
+  tokens_without_punctuation = [ token for token in article_tokens if token not in punctuation ]
+  tokens_without_stopwords = [ token for token in tokens_without_punctuation if token not in stopwords ]
+  
+  # stem
+  tokens_stemmed = tokens_without_stopwords.apply(stemmer.stem)
+  
+  # use final list
+  articles_csv['tokens_unigram'][i] = tokens_stemmed
+
+model_count = CountVectorizer(max_df = 0.40, min_df = 0.01)
+articles_counted = model_count.fit_transform(articles_csv["tokens_unigram"])
+dfm = pd.DataFrame(articles_counted.toarray(), columns = model_count.get_feature_names_out())
+
+dfm_dict = dict(zip(model_count.get_feature_names_out(), articles_counted.sum(axis = 0).tolist()[0]))
+cloud = WordCloud().generate_from_frequencies(dfm_dict)
+plt.imshow(cloud)
+plt.axis("off")
 ```
 
 ```r
