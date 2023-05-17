@@ -17,8 +17,38 @@ permalink: /10-maschinelles-lernen-1/
 
 ## Praxisübungen
 
-Folgen noch.
+Maschinelles Lernen mit Python und R befindet sich derzeit in ständigem Umbruch. Während viele jüngste Entwicklungen, etwa im Bereich der Transformer-Modelle, zunächst mit Python Verbreitung finden, sind die Anwendungen in R zunehmend einfacher und direkter in sozialwissenschaftliche Arbeitsprozesse integrierbar. Wir sehen hier deshalb von Schritt-für-Schritt-Anleitungen ab, weil sich diese Anleitungen ständig selbst überleben würden; stattdessen werden hier einige Begrifflichkeiten vermittelt, die "im Internet" Verwendung finden, und zahlreiche Links zu Lernumgebungen und Anleitungen gesammelt.
 
+### Begriffsübersicht
+
+Begriff aus dem Lehrbuch | informatische Synonyme | statistische Synonyme | (weitere) englische Synonyme
+--- | --- | --- | ---
+*Goldstandard* | ground truth | abhängige Variable | label, outcome
+*Codierung* | Annotation | Codierung | code, rate, annotate
+*Feature* | Feature | unabhängige Variable | term, word, uni/bi-/tri-/n-gram
+*Trainings-/Testpaket* | Trainings-/Testdaten | Kalibrierung/Validierung | split
+*Lernprozess* | trainieren | schätzen | train, estimate
+*Validierung* | Inspektion | Güte | validation, verification
+*Anwendung* | Klassifizierung | Prognose | classifier, prediction, deployment
+
+### Links für Python
+
+- [sklearn](https://scikit-learn.org/) (auch: `scikit-learn`) ist eine/die zentrale Python-Bibliothek für das maschinelle Lernen
+- [TensorFlow](https://www.tensorflow.org/) (auch als `tf` abgekürzt) stellt eine verallgemeinernde Sprache für die Definition und Berechnung von neuronalen Netzen dar. Sie wurde einst von Google ins Leben gerufen, ist mittlerweile aber davon weitestgehend unabhängig, und für viele Programmiersprachen verfügbar. Im Kern aber ist sie eine [Python-Bibliothek](https://www.tensorflow.org/overview), die große Modelle effizient zu verarbeiten weiß. 
+- Auch [Keras](https://keras.io/) ist eine verallgemeinernde Sprache für die Definition und Berechnung von neuronalen Netzen, die primär als [Python-Bibliothek](https://keras.io/api/) verfügbar ist. Sie ist von TensorFlow unabhängig, kann aber darauf aufbauen -- und dasselbe gilt umgekehrt. Der Fokus von Keras liegt in der einfachen Lesbarkeit. Für allzu große Modelle und deren effiziente Verarbeitung weicht Keras deshalb auf andere Bibliotheken (z.B. TensorFlow) aus. 
+- [PyTorch](https://pytorch.org/) ist eine weitere Alternative für die verallgemeinernde Sprache von neuronalen Netzen, dieses Mal von Meta/Facebook. Sie ist recht neu, gilt aber als gute Kombination aus Effizienz und Lesbarkeit. Auch sie ist in erster Linie eine einfach zu nutzende [Python-Bibliothek](https://pytorch.org/docs/stable/index.html).
+- Einen angenehmen Einstieg in das überwachte Lernen von Textdaten bietet etwa [spaCy](https://spacy.io/usage/spacy-101).
+- Umfangreicher (und etwas objektiver) bietet das [Keh-Soon Yong](https://f0nzie.github.io/yongks-python-rmarkdown-book/sklearn.html).
+- Und genereller, also nicht auf Textdaten beschränkt, finden sich zahlreiche Einstiegserklärungen und -beispiele bei [van Atteveldt, Trilling und Arcila](https://cssbook.net/content/chapter08.html), [Mark Scott](https://bookdown.org/content/f097ddae-23f5-4b2d-b360-ad412a6ca36a/chapter-4-supervised-learning.html) oder [Jake VanderPlas](https://jakevdp.github.io/PythonDataScienceHandbook/#5.-Machine-Learning).
+
+### Links für R
+
+- [tidymodels](https://www.tidymodels.org/) stellt die passende Erweiterung zum [tidyverse](https://www.tidyverse.org/) dar, um in R einfach lesbare und kompatible maschinelle Lernverfahren zu formulieren.
+- [caret](https://cran.r-project.org/web/packages/caret/vignettes/caret.html) galt lange Zeit als das nutzungsfreundlichste und umfangreichste R-Paket für den Umgang mit überwachtem maschinellem Lernen. Noch immer erfreut sich das Paket großer Beliebtheit, wenngleich es mitunter eine etwas eigene Syntax erfordert.
+- Für Textdaten gilt [quanteda](https://quanteda.io/) und für das maschinelle Lernen insbesondere [quanteda.textmodels](https://github.com/quanteda/quanteda.textmodels) als De-facto-Standard in den Sozialwissenschaften.
+- Einen angenehmen Einstieg in das überwachte Lernen von Textdaten bietet [Julian Unkel](https://bookdown.org/joone/ComputationalMethods/textclassification.html). 
+- Umfangreicher gehen [Emil Hvitfeldt und Julia Silge](https://smltar.com/) darauf ein.
+- Und genereller, also nicht auf Textdaten beschränkt, finden sich zahlreiche Einstiegserklärungen und -beispiele bei [van Atteveldt, Trilling und Arcila](https://cssbook.net/content/chapter08.html).
 
 ## Lösungsansätze
 
