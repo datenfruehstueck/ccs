@@ -59,4 +59,4 @@ Ab hier folgen nun verschiedene Lösungswege zu den oben vorgestellten Übungen.
 1. Indegree = 1 (eine eingehende Kante), Outdegree = 4 (vier ausgehende Kanten).
 1. 3 (F > N > G > C).
 1. Der Durchmesser beträgt hier 5.
-1. K, mit einer Zwischenzentralität von 30 (bei Berücksichtigung der gerichteten Kanten, also nur "in Fahrtrichtung). 
+1. K, mit einer Zwischenzentralität von 30 (bei Berücksichtigung der gerichteten Kanten, also nur "in Fahrtrichtung"). 
